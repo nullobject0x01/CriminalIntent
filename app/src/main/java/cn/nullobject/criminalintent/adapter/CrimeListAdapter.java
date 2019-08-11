@@ -1,6 +1,7 @@
 package cn.nullobject.criminalintent.adapter;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 import cn.nullobject.criminalintent.R;
@@ -21,7 +23,7 @@ import cn.nullobject.criminalintent.model.Crime;
  */
 public class CrimeListAdapter extends RecyclerView.Adapter<CrimeListAdapter.CrimeHolder> {
 
-   
+
     private List<Crime> mCrimes;
 
     private final Context mContext;
@@ -35,20 +37,22 @@ public class CrimeListAdapter extends RecyclerView.Adapter<CrimeListAdapter.Crim
 
         private AppCompatTextView mTitle;
         private AppCompatTextView mDate;
+        private AppCompatImageView mSolvedImageView;
         private Crime mCrime;
 
         public CrimeHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_crime, parent, false));
             mTitle = itemView.findViewById(R.id.crime_title);
             mDate = itemView.findViewById(R.id.crime_date);
+            mSolvedImageView = itemView.findViewById(R.id.crime_solved);
             itemView.setOnClickListener(this);
         }
 
         public void bind(Crime crime) {
             mCrime = crime;
             mTitle.setText(mCrime.getTitle());
-            mDate.setText(mCrime.getDate()
-                                .toString());
+            mDate.setText(DateFormat.format("yyyy-MM-dd hh:mm:ss.sss",mCrime.getDate()));
+            mSolvedImageView.setVisibility(crime.isSolved() ? View.VISIBLE : View.GONE);
         }
 
         @Override
@@ -73,5 +77,5 @@ public class CrimeListAdapter extends RecyclerView.Adapter<CrimeListAdapter.Crim
     public int getItemCount() {
         return mCrimes.size();
     }
-    
+
 }
