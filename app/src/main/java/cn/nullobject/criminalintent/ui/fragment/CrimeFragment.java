@@ -1,5 +1,8 @@
 package cn.nullobject.criminalintent.ui.fragment;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import java.util.Date;
+import java.util.UUID;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +22,8 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 import cn.nullobject.criminalintent.R;
 import cn.nullobject.criminalintent.model.Crime;
+import cn.nullobject.criminalintent.model.CrimeLab;
+import cn.nullobject.criminalintent.ui.activity.CrimeActivity;
 
 /**
  * @author xiongda
@@ -26,15 +32,47 @@ import cn.nullobject.criminalintent.model.Crime;
  */
 public class CrimeFragment extends Fragment {
 
+    public static final String ARG_CRIME_ID = "crime_id";
+
     private Crime mCrime;
     private AppCompatEditText mTitleField;
     private AppCompatButton mDateButton;
     private AppCompatCheckBox mSolvedCheckBox;
 
+    private Activity mActivity;
+
+    private CrimeFragment() {
+
+    }
+
+    public static CrimeFragment newInstance(UUID crimeId) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ARG_CRIME_ID, crimeId);
+        CrimeFragment fragment = new CrimeFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mActivity = null;
+    }
+
+    @Override
+    public void onAttach(final Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
+    }
+
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCrime = new Crime();
+        if (getArguments() != null) {
+            UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
+            mCrime = CrimeLab.get(mActivity)
+                             .getCrime(crimeId);
+        }
     }
 
     @Nullable
@@ -44,6 +82,7 @@ public class CrimeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_crime, container, false);
         mTitleField = view.findViewById(R.id.crime_title);
+        mTitleField.setText(mCrime.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2) {
@@ -65,6 +104,7 @@ public class CrimeFragment extends Fragment {
                                   .toString());
         mDateButton.setEnabled(false);
         mSolvedCheckBox = view.findViewById(R.id.crime_solved);
+        mSolvedCheckBox.setChecked(mCrime.isSolved());
         mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(final CompoundButton compoundButton, final boolean b) {

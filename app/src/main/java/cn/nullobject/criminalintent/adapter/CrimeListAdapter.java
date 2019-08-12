@@ -1,6 +1,7 @@
 package cn.nullobject.criminalintent.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 import cn.nullobject.criminalintent.R;
 import cn.nullobject.criminalintent.model.Crime;
+import cn.nullobject.criminalintent.ui.activity.CrimeActivity;
 
 /**
  * @author xiongda
@@ -51,14 +53,13 @@ public class CrimeListAdapter extends RecyclerView.Adapter<CrimeListAdapter.Crim
         public void bind(Crime crime) {
             mCrime = crime;
             mTitle.setText(mCrime.getTitle());
-            mDate.setText(DateFormat.format("yyyy-MM-dd hh:mm:ss.sss",mCrime.getDate()));
+            mDate.setText(DateFormat.format("yyyy-MM-dd hh:mm:ss.sss", mCrime.getDate()));
             mSolvedImageView.setVisibility(crime.isSolved() ? View.VISIBLE : View.GONE);
         }
 
         @Override
         public void onClick(final View view) {
-            Toast.makeText(mContext, mCrime.getTitle() + " clicked!", Toast.LENGTH_SHORT)
-                 .show();
+            CrimeActivity.newActivity(mContext, mCrime.getId());
         }
     }
 
