@@ -20,10 +20,10 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import cn.nullobject.criminalintent.R;
 import cn.nullobject.criminalintent.model.Crime;
 import cn.nullobject.criminalintent.model.CrimeLab;
-import cn.nullobject.criminalintent.ui.activity.CrimeActivity;
 
 /**
  * @author xiongda
@@ -32,7 +32,10 @@ import cn.nullobject.criminalintent.ui.activity.CrimeActivity;
  */
 public class CrimeFragment extends Fragment {
 
-    public static final String ARG_CRIME_ID = "crime_id";
+    private static final String ARG_CRIME_ID = "crime_id";
+    private static final String DIALOG_DATE = "DialogDate";
+
+    private static final int REQUEST_DATE = 0;
 
     private Crime mCrime;
     private AppCompatEditText mTitleField;
@@ -100,18 +103,39 @@ public class CrimeFragment extends Fragment {
             }
         });
         mDateButton = view.findViewById(R.id.crime_date);
-        mDateButton.setText(mCrime.getDate()
-                                  .toString());
-        mDateButton.setEnabled(false);
-        mSolvedCheckBox = view.findViewById(R.id.crime_solved);
-        mSolvedCheckBox.setChecked(mCrime.isSolved());
-        mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(final CompoundButton compoundButton, final boolean b) {
-                mCrime.setSolved(b);
+        updateDate();
+        mDateButton.setEnabled(true);
+        mDateButton.setOnClickListener(v -> {
+            FragmentManager fragmentManager = getFragmentManager();
+            if (fragmentManager != null) {
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mCrime.getDate());
+                dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
+                dialog.setCancelable(true);
+                dialog.show(fragmentManager, DIALOG_DATE);
             }
         });
+        mSolvedCheckBox = view.findViewById(R.id.crime_solved);
+        mSolvedCheckBox.setChecked(mCrime.isSolved());
+        mSolvedCheckBox.setOnCheckedChangeListener((compoundButton, b) -> mCrime.setSolved(b));
         return view;
     }
 
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            super.onActivityResult(requestCode, resultCode, data);
+        } else {
+            if (requestCode == REQUEST_DATE) {
+                Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+                mCrime.setDate(date);
+                updateDate();
+            }
+        }
+
+    }
+
+    private void updateDate() {
+        mDateButton.setText(mCrime.getDate()
+                                  .toString());
+    }
 }

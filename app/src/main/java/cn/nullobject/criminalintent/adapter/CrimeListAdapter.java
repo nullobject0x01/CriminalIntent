@@ -1,12 +1,10 @@
 package cn.nullobject.criminalintent.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -16,7 +14,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 import cn.nullobject.criminalintent.R;
 import cn.nullobject.criminalintent.model.Crime;
-import cn.nullobject.criminalintent.ui.activity.CrimeActivity;
+import cn.nullobject.criminalintent.ui.activity.CrimePagerActivity;
 
 /**
  * @author xiongda
@@ -59,7 +57,8 @@ public class CrimeListAdapter extends RecyclerView.Adapter<CrimeListAdapter.Crim
 
         @Override
         public void onClick(final View view) {
-            CrimeActivity.newActivity(mContext, mCrime.getId());
+            //            CrimeActivity.newActivity(mContext, mCrime.getId());
+            CrimePagerActivity.newActivity(mContext, mCrime.getId());
         }
     }
 

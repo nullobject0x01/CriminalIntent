@@ -50,7 +50,9 @@ public class CrimeListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_crime_ist, container, false);
 
         mCrimeRecyclerView = view.findViewById(R.id.crime_recycler_view);
-        mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+//        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        mCrimeRecyclerView.setLayoutManager(layoutManager);
         //        updateUI();
         return view;
     }
