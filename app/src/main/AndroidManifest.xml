@@ -16,7 +16,6 @@
             android:parentActivityName=".ui.activity.CrimeListActivity">
         </activity>
         <activity android:name=".ui.activity.MainActivity">
-
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN"/> -->
 
