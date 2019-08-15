@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import androidx.annotation.NonNull;
+
 /**
  * @author xiongda
  * Created on 2019/8/10.
@@ -25,12 +27,12 @@ public class CrimeLab {
 
     private CrimeLab(Context context) {
         mCrimes = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            Crime crime = new Crime();
-            crime.setTitle("Crime # " + i);
-            crime.setSolved(i % 2 == 0);
-            mCrimes.add(crime);
-        }
+//        for (int i = 0; i < 100; i++) {
+//            Crime crime = new Crime();
+//            crime.setTitle("Crime # " + i);
+//            crime.setSolved(i % 2 == 0);
+//            mCrimes.add(crime);
+//        }
     }
 
     public List<Crime> getCrimes() {
@@ -45,5 +47,9 @@ public class CrimeLab {
             }
         }
         return null;
+    }
+
+    public void addCrime(@NonNull Crime crime) {
+        mCrimes.add(crime);
     }
 }

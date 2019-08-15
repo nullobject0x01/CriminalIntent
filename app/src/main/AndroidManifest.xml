@@ -11,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.CrimePagerActivity">
+        <activity
+            android:name=".ui.activity.CrimePagerActivity"
+            android:parentActivityName=".ui.activity.CrimeListActivity">
         </activity>
         <activity android:name=".ui.activity.MainActivity">
 

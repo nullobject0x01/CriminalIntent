@@ -1,6 +1,7 @@
 package cn.nullobject.criminalintent.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ActionMode;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -14,6 +15,9 @@ import cn.nullobject.criminalintent.ui.fragment.CrimeFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.List;
 import java.util.UUID;
@@ -56,6 +60,5 @@ public class CrimePagerActivity extends AppCompatActivity {
         UUID uuid = (UUID) getIntent().getSerializableExtra(EXTRA_CRIME_ID);
         mViewPager.setCurrentItem(mCrimes.indexOf(CrimeLab.get(this)
                                                           .getCrime(uuid)));
-
     }
 }
