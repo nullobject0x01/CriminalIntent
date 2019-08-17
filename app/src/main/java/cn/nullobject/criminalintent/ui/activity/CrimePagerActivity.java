@@ -1,26 +1,21 @@
 package cn.nullobject.criminalintent.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+
+import java.util.List;
+import java.util.UUID;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.ActionMode;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import cn.nullobject.criminalintent.R;
 import cn.nullobject.criminalintent.model.Crime;
 import cn.nullobject.criminalintent.model.CrimeLab;
 import cn.nullobject.criminalintent.ui.fragment.CrimeFragment;
-
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import java.util.List;
-import java.util.UUID;
 
 import static cn.nullobject.criminalintent.utils.Constants.EXTRA_CRIME_ID;
 
@@ -58,7 +53,9 @@ public class CrimePagerActivity extends AppCompatActivity {
             }
         });
         UUID uuid = (UUID) getIntent().getSerializableExtra(EXTRA_CRIME_ID);
-        mViewPager.setCurrentItem(mCrimes.indexOf(CrimeLab.get(this)
-                                                          .getCrime(uuid)));
+        Crime crime = CrimeLab.get(this)
+                              .getCrime(uuid);
+        int item = mCrimes.indexOf(crime);
+        mViewPager.setCurrentItem(item);
     }
 }

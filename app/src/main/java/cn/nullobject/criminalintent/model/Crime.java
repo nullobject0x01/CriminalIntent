@@ -3,6 +3,8 @@ package cn.nullobject.criminalintent.model;
 import java.util.Date;
 import java.util.UUID;
 
+import androidx.annotation.Nullable;
+
 /**
  * @author xiongda
  * Created on 2019/8/10.
@@ -11,13 +13,17 @@ import java.util.UUID;
 public class Crime {
 
     private final UUID mId;
-    private String mTitle;
+    private String mTitle = "";
     private Date mDate;
     private boolean mSolved;
 
-    public Crime() {
-        mId = UUID.randomUUID();
+    public Crime(UUID id) {
+        mId = id;
         mDate = new Date(System.currentTimeMillis());
+    }
+
+    public Crime() {
+        this(UUID.randomUUID());
     }
 
     public UUID getId() {
@@ -49,5 +55,13 @@ public class Crime {
     public Crime setSolved(final boolean solved) {
         mSolved = solved;
         return this;
+    }
+
+    @Override
+    public boolean equals(@Nullable final Object obj) {
+        if (obj instanceof Crime) {
+            return mId.equals(((Crime) obj).mId);
+        }
+        return false;
     }
 }

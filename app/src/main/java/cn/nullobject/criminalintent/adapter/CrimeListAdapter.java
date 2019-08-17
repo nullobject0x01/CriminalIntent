@@ -33,6 +33,11 @@ public class CrimeListAdapter extends RecyclerView.Adapter<CrimeListAdapter.Crim
         mContext = context;
     }
 
+    public CrimeListAdapter setCrimes(final List<Crime> crimes) {
+        mCrimes = crimes;
+        return this;
+    }
+
     class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private AppCompatTextView mTitle;
