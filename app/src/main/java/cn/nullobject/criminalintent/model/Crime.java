@@ -17,6 +17,8 @@ public class Crime {
     private Date mDate;
     private boolean mSolved;
 
+    private String mSuspect;
+
     public Crime(UUID id) {
         mId = id;
         mDate = new Date(System.currentTimeMillis());
@@ -54,6 +56,15 @@ public class Crime {
 
     public Crime setSolved(final boolean solved) {
         mSolved = solved;
+        return this;
+    }
+
+    public String getSuspect() {
+        return mSuspect;
+    }
+
+    public Crime setSuspect(final String suspect) {
+        mSuspect = suspect;
         return this;
     }
 

@@ -24,8 +24,11 @@ public class CrimeBaseHelper extends SQLiteOpenHelper {
                     CrimeTable.Cols.UUID + ", " +
                     CrimeTable.Cols.TITLE + ", " +
                     CrimeTable.Cols.DATE + ", " +
-                    CrimeTable.Cols.SOLVED + ")";
-    
+                    CrimeTable.Cols.SOLVED + ", " +
+                    CrimeTable.Cols.SUSPECT +
+
+                    ")";
+
 
     public CrimeBaseHelper(@NonNull final Context context) {
         super(context, DATABASE_NAME, null, VERSION);

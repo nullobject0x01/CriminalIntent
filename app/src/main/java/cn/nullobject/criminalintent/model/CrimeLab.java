@@ -101,6 +101,7 @@ public class CrimeLab {
         cv.put(Cols.DATE, crime.getDate()
                                .getTime());
         cv.put(Cols.SOLVED, crime.isSolved());
+        cv.put(Cols.SUSPECT, crime.getSuspect());
         return cv;
     }
 }
