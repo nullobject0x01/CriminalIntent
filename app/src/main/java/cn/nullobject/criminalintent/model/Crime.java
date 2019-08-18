@@ -17,6 +17,7 @@ public class Crime {
     private Date mDate;
     private boolean mSolved;
 
+
     private String mSuspect;
 
     public Crime(UUID id) {
@@ -66,6 +67,10 @@ public class Crime {
     public Crime setSuspect(final String suspect) {
         mSuspect = suspect;
         return this;
+    }
+
+    public String getPhotoFileName() {
+        return "IMG_" + getId().toString() + ".jpg";
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -103,5 +104,9 @@ public class CrimeLab {
         cv.put(Cols.SOLVED, crime.isSolved());
         cv.put(Cols.SUSPECT, crime.getSuspect());
         return cv;
+    }
+
+    public File getPhotoFile(Crime crime) {
+        return new File(mContext.getFilesDir(), crime.getPhotoFileName());
     }
 }
