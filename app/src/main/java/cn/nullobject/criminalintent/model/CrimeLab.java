@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import cn.nullobject.criminalintent.db.CrimeBaseHelper;
 import cn.nullobject.criminalintent.db.CrimeCursorWrapper;
-import cn.nullobject.criminalintent.db.CrimeDbSchema;
 
 import static cn.nullobject.criminalintent.db.CrimeDbSchema.CrimeTable.Cols;
 import static cn.nullobject.criminalintent.db.CrimeDbSchema.CrimeTable.NAME;

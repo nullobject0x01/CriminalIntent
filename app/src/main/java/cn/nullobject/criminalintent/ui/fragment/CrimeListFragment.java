@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.ItemTouchUIUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import cn.nullobject.criminalintent.R;
@@ -42,6 +45,38 @@ public class CrimeListFragment extends Fragment {
     private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
     private List<Crime> mCrimes = new ArrayList<>();
 
+    private ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.DOWN,
+            ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull final RecyclerView recyclerView,
+                              @NonNull final RecyclerView.ViewHolder viewHolder,
+                              @NonNull final RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, final int direction) {
+            int position = viewHolder.getAdapterPosition();
+            CrimeLab.get(mActivity.getApplicationContext())
+                    .removeCrime(mCrimes.get(position));
+            mCrimes.remove(position);
+            mListAdapter.notifyItemRemoved(position);
+            mActivity.invalidateOptionsMenu();
+            updateSubtitle();
+            Toast.makeText(mActivity.getApplicationContext(), "Item " + position + "removec.", Toast.LENGTH_SHORT)
+                 .show();
+        }
+
+        @Override
+        public boolean isLongPressDragEnabled() {
+            return false;
+        }
+
+        @Override
+        public boolean isItemViewSwipeEnabled() {
+            return true;
+        }
+    });
 
     @Override
     public void onAttach(final Context context) {
@@ -80,6 +115,7 @@ public class CrimeListFragment extends Fragment {
         mCrimeRecyclerView = view.findViewById(R.id.crime_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mCrimeRecyclerView.setLayoutManager(layoutManager);
+        mItemTouchHelper.attachToRecyclerView(mCrimeRecyclerView);
         return view;
     }
 
